@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: Bjj2325fmDios..M
+      MYSQL_DATABASE: ForceMentaldbs
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 
+    ports:
+      - "3306:3306"
