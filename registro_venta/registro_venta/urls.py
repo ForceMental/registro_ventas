@@ -15,16 +15,32 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from ventas.views import VentaListCreateView
 from django.contrib import admin
 from django.urls import path, include
-from ventas.views import VentaListCreateView, ProcesarVentaView, VentaDetailView
+from django.contrib import admin
+from django.urls import path, re_path, include
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Tu API",
+        default_version='v1',
+        description="Descripción de tu API",
+        terms_of_service="https://www.tu-tos.com/",
+        contact=openapi.Contact(email="contacto@tudominio.com"),
+        license=openapi.License(name="Tu Licencia"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('ventas/', VentaListCreateView.as_view(), name='venta-list-create'),
-    path('ventas/<int:pk>/', VentaDetailView.as_view(), name='venta-detail'),
-    path('procesar_venta/<int:venta_id>/', ProcesarVentaView.as_view(), name='procesar-venta'), # 'venta_id'
+    path('api/', include('ventas.urls')),
+    re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]
 
 

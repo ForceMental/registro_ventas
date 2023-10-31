@@ -81,12 +81,11 @@ WSGI_APPLICATION = 'registro_venta.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ForceMentaldbs',
-        'USER': 'root',
-        'PASSWORD': 'Bjj2325fmDios..M',
-        'HOST': '127.0.0.1',
+        'NAME': 'usuario',
+        'USER': 'proyecto',
+        'PASSWORD': '123456',
+        'HOST': '34.199.25.249',
         'PORT': '3306',
-        'OPTION': "SET sql_mode='STRICT_TRANS_TABLES'"
     }
 }
 
