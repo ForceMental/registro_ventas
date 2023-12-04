@@ -48,6 +48,25 @@ class VentaListCreateView(generics.ListCreateAPIView):
     queryset = Venta.objects.all()
     serializer_class = VentaSerializer
 
+class CancelarVentaView(APIView):
+    def put(self, request, venta_id, format=None):
+        try:
+            venta = Venta.objects.get(pk=venta_id)
+        except Venta.DoesNotExist:
+            return Response({'error': 'La venta no existe'}, status=status.HTTP_404_NOT_FOUND)
+        
+        if venta.estado_venta == 'C':
+            return Response({'error': 'La venta ya está cancelada'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Cambia el estado de la venta a "Cancelada"
+        venta.estado_venta = 'C'
+        venta.save()
+        
+        # Aquí podrías agregar lógica adicional si es necesario, como deshacer cambios en el stock o realizar otras operaciones relacionadas con la cancelación de la venta.
+        
+        serializer = VentaSerializer(venta)
+        return Response(serializer.data)
+
 class AprobarVentaView(APIView):
     def put(self, request, venta_id, format=None):
         try:
